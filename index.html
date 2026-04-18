@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Игра слияния — WebGL</title>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="ui">
+    <h1>Игра слияния</h1>
+    <div id="score">Счёт: 0</div>
+  </div>
+  <div id="gameStage" class="game-stage">
+    <div class="stage-side stage-side--left" aria-hidden="true"></div>
+    <div id="board">
+      <canvas id="glcanvas"></canvas>
+      <div id="winLayer" class="hidden">
+        <div id="winCard">
+          <h2>Победа!</h2>
+          <p>Вы добрались до финального 🔮 сигила.</p>
+          <div id="winActions">
+            <button id="continueBtn">Продолжить</button>
+            <button id="newGameBtn">Новая игра</button>
+          </div>
+        </div>
+      </div>
+      <div id="gameOverLayer" class="hidden">
+        <div id="gameOverCard">
+          <h2>Вы приграли</h2>
+          <p id="finalScore">Счёт: 0</p>
+          <button id="overlayRestart">Попробовать снова</button>
+        </div>
+      </div>
+    </div>
+    <aside class="rune-legend" aria-labelledby="runeLegendHeading">
+      <h2 id="runeLegendHeading">Порядок величин</h2>
+      <p class="rune-legend-hint">Совмещайте одинаковые сигилы друг с другом или с 🟡, чтобы улучшить её. 💣 уничтожит плитку при слиянии.</p>
+      <div class="rune-legend-scroll">
+        <table class="rune-table">
+          <thead>
+            <tr>
+              <th scope="col">Шаг</th>
+              <th scope="col">Сигил</th>
+            </tr>
+          </thead>
+          <tbody id="runeLegendBody"></tbody>
+        </table>
+      </div>
+    </aside>
+  </div>
+  <button id="restart">Начать заново</button>
+  <script src="game.js?v=202604181518"></script>
+</body>
+</html>

@@ -1,0 +1,288 @@
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background:
+    radial-gradient(120% 80% at 50% -10%, rgba(90, 140, 255, 0.22), transparent 55%),
+    radial-gradient(90% 60% at 100% 50%, rgba(180, 90, 255, 0.12), transparent 45%),
+    linear-gradient(165deg, #0f1528 0%, #0a0c14 48%, #06070d 100%);
+  color: #dce6f5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#ui {
+  margin: 22px 0 14px;
+  text-align: center;
+}
+
+h1 {
+  margin: 0 0 10px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #bfe8ff;
+  text-shadow:
+    0 0 28px rgba(100, 200, 255, 0.45),
+    0 2px 0 rgba(0, 0, 0, 0.35);
+}
+
+#score {
+  display: inline-block;
+  color: #c8ddff;
+  font-weight: 700;
+  background: rgba(18, 28, 48, 0.82);
+  border: 1px solid rgba(120, 180, 255, 0.38);
+  border-radius: 12px;
+  padding: 10px 18px;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+    0 12px 28px rgba(0, 0, 0, 0.35);
+}
+
+.game-stage {
+  --legend-width: 220px;
+  display: grid;
+  grid-template-columns: var(--legend-width) 420px var(--legend-width);
+  justify-content: center;
+  align-items: start;
+  gap: 18px;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.stage-side {
+  width: var(--legend-width);
+  min-height: 1px;
+}
+
+.rune-legend {
+  width: var(--legend-width);
+  box-sizing: border-box;
+  padding: 12px 12px 14px;
+  background: linear-gradient(165deg, rgba(22, 32, 54, 0.92), rgba(12, 16, 30, 0.96));
+  border: 1px solid rgba(120, 180, 255, 0.35);
+  border-radius: 12px;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+    0 14px 32px rgba(0, 0, 0, 0.4);
+}
+
+.rune-legend h2 {
+  margin: 0 0 6px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #b8dcff;
+  text-align: center;
+}
+
+.rune-legend-hint {
+  margin: 0 0 10px;
+  font-size: 0.72rem;
+  line-height: 1.35;
+  color: rgba(180, 210, 255, 0.72);
+  text-align: center;
+}
+
+.rune-legend-scroll {
+  max-height: min(380px, 70vh);
+  overflow: auto;
+  margin: 0 -4px;
+  padding: 0 4px;
+}
+
+.rune-legend-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.rune-legend-scroll::-webkit-scrollbar-thumb {
+  background: rgba(100, 150, 220, 0.35);
+  border-radius: 4px;
+}
+
+.rune-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.rune-table thead th {
+  padding: 6px 8px;
+  text-align: left;
+  color: rgba(160, 195, 255, 0.85);
+  font-weight: 700;
+  border-bottom: 1px solid rgba(100, 150, 220, 0.28);
+}
+
+.rune-table thead th:last-child {
+  text-align: center;
+}
+
+.rune-table tbody td {
+  padding: 6px 8px;
+  border-bottom: 1px solid rgba(80, 120, 200, 0.15);
+  color: #dce6f5;
+}
+
+.rune-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.rune-table .col-step {
+  width: 36%;
+  font-variant-numeric: tabular-nums;
+  color: rgba(200, 220, 255, 0.88);
+}
+
+.rune-table .col-sigil {
+  text-align: center;
+  font-size: 1.35rem;
+  line-height: 1.2;
+  font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", "Segoe UI", sans-serif;
+}
+
+#board {
+  position: relative;
+  width: 420px;
+  height: 420px;
+  justify-self: center;
+}
+
+canvas {
+  border: 2px solid rgba(110, 170, 255, 0.45);
+  border-radius: 10px;
+  display: block;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.06) inset,
+    0 20px 50px rgba(0, 0, 0, 0.55),
+    0 0 40px rgba(80, 140, 255, 0.18);
+}
+
+#gameOverLayer {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 10, 18, 0.78);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+
+#gameOverLayer.hidden {
+  display: none;
+}
+
+#winLayer {
+  position: absolute;
+  inset: 0;
+  background: rgba(60, 120, 200, 0.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(3px);
+}
+
+#winLayer.hidden {
+  display: none;
+}
+
+#winCard,
+#gameOverCard {
+  background: linear-gradient(160deg, rgba(28, 38, 62, 0.96), rgba(16, 20, 36, 0.98));
+  border: 1px solid rgba(130, 190, 255, 0.45);
+  border-radius: 14px;
+  padding: 20px 22px;
+  text-align: center;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.06) inset,
+    0 18px 40px rgba(0, 0, 0, 0.5);
+}
+
+#gameOverCard h2 {
+  margin: 0 0 8px;
+  color: #e8f0ff;
+}
+
+#winCard h2 {
+  margin: 0 0 8px;
+  color: #e8f0ff;
+}
+
+#winCard p {
+  margin: 0 0 12px;
+  color: #a8c4ff;
+  font-weight: 700;
+}
+
+#finalScore {
+  margin: 0 0 12px;
+  color: #a8c4ff;
+  font-weight: 700;
+}
+
+#winActions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+#restart,
+#overlayRestart,
+#continueBtn,
+#newGameBtn {
+  border: 0;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #5a7cff 0%, #3d4fd9 100%);
+  color: #f4f7ff;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 10px 22px rgba(40, 80, 200, 0.35);
+  transition: transform 0.12s ease, filter 0.12s ease, box-shadow 0.12s ease;
+}
+
+#restart {
+  margin-top: 12px;
+  padding: 10px 18px;
+}
+
+#overlayRestart {
+  padding: 9px 16px;
+}
+
+#continueBtn,
+#newGameBtn {
+  padding: 9px 14px;
+}
+
+#restart:hover,
+#overlayRestart:hover,
+#continueBtn:hover,
+#newGameBtn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 26px rgba(50, 100, 240, 0.45);
+}
+
+@media (max-width: 920px) {
+  .game-stage {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 16px;
+  }
+
+  .stage-side {
+    display: none;
+  }
+
+  .rune-legend {
+    width: min(420px, 100%);
+    max-width: 420px;
+  }
+
+  .rune-legend-scroll {
+    max-height: 240px;
+  }
+}
