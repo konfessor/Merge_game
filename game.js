@@ -202,7 +202,7 @@ function addRandomTile() {
   const roll = Math.random();
   if (roll < 0.01) {
     grid[r][c] = BOMB_VALUE;
-  } else if (roll < 0.96) {
+  } else if (roll < 0.06) {
     grid[r][c] = GOLDEN_SIGIL_VALUE;
   } else {
     grid[r][c] = roll < 0.9 ? 2 : 4;
